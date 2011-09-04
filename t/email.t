@@ -288,7 +288,7 @@ eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
     'From: "Tim Bunce" <timbunce@twitter> (timbunce)
 Subject: RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS:
- http://bit.ly/nvlT9z (via @tapbot_paul)
+ http://www.theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/ (via @tapbot_paul)
 Date: Sat, 3 Sep 2011 23:13:06 +0100
 Message-Id: <110113112895660033@twitter>
 In-Reply-To: 
@@ -296,7 +296,7 @@ MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
-RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS: <a href="http://bit.ly/nvlT9z">http://bit.ly/nvlT9z</a> (via @tapbot_paul)
+RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS: <a href="http://www.theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/">http://www.theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/</a> (via @tapbot_paul)
 <br/><br/>
 <a href="https://twitter.com/timbunce/status/110113112895660033">https://twitter.com/timbunce/status/110113112895660033</a>'
 );
@@ -383,7 +383,8 @@ $tweet = {
 eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
     'From: "David E. Wheeler" <theory@twitter> (theory)
-Subject: “Could You Afford to be Poor?” http://j.mp/qRYF8q
+Subject: “Could You Afford to be Poor?”
+ http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html
 Date: Sun, 4 Sep 2011 08:28:58 +0100
 Message-Id: <110253001725321216@twitter>
 In-Reply-To: 
@@ -391,7 +392,7 @@ MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
-“Could You Afford to be Poor?” <a href="http://j.mp/qRYF8q">http://j.mp/qRYF8q</a>
+“Could You Afford to be Poor?” <a href="http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html">http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html</a>
 <br/><br/>
 <a href="https://twitter.com/theory/status/110253001725321216">https://twitter.com/theory/status/110253001725321216</a>'
 );

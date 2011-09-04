@@ -6,6 +6,7 @@ use Email::Date::Format qw(email_date);
 use Email::MIME;
 use Email::MIME::Creator;
 use Encode;
+use LWP::UserAgent;
 use HTML::Entities;
 use Web::oEmbed::Common;
 has 'mail_imapclient' => ( is => 'ro', isa => 'Mail::IMAPClient' );
@@ -53,6 +54,7 @@ sub tweet_to_email {
         foreach my $entity ( @{ $tweet->{entities}->{urls} } ) {
             my $expanded_url = $entity->{expanded_url} || $entity->{url};
             next unless $expanded_url;
+            $expanded_url = $self->expand_url($expanded_url);
             substr(
                 $subject,
                 $entity->{indices}->[0] + $subject_offset,
@@ -104,6 +106,22 @@ sub tweet_to_email {
         ],
         body => $body,
     );
+}
+
+sub expand_url {
+    my ( $self, $url ) = @_;
+    warn "expand_url $url...";
+    my $ua = LWP::UserAgent->new(
+        env_proxy             => 1,
+        timeout               => 30,
+        agent                 => "Twimap",
+        requests_redirectable => [],
+    );
+    my $res = $ua->get($url);
+    return $url unless $res->is_redirect;
+    my $location = $res->header('Location');
+    return $self->expand_url($location) if defined $location;
+    return $url;
 }
 
 1;
