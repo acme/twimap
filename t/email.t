@@ -6,6 +6,7 @@ use lib 'lib';
 use App::Twimap;
 use Data::Dumper;
 use Test::More;
+use Test::Differences::Color;
 
 my $twimap = App::Twimap->new();
 
@@ -89,18 +90,21 @@ my $tweet = {
 
 my $email = $twimap->tweet_to_email($tweet);
 
-is( $email->as_string, 'From: "Simon Wistow" <deflatermouse@twitter>
+eq_or_diff(
+    $email->as_string, 'From: "Simon Wistow" <deflatermouse@twitter>
 Subject: Breakfast http://lockerz.com/s/135515455
 Date: Sat, 3 Sep 2011 20:39:51 +0100
 Message-Id: <110074547411238913@twitter>
 In-Reply-To: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
-Breakfast http://lockerz.com/s/135515455
+Breakfast <a href="http://lockerz.com/s/135515455">http://lockerz.com/s/135515455</a>
+<br/><br/>
+<a href="http://c0013938.cdn1.cloudfiles.rackspacecloud.com/x2_813cd3f" title="x2_813cd3f"><img alt="x2_813cd3f" height="79" src="http://c0013942.cdn1.cloudfiles.rackspacecloud.com/x2_813cd3f" width="79" /></a><br/><br/>
 
-https://twitter.com/deflatermouse/status/110074547411238913'
+<a href="https://twitter.com/deflatermouse/status/110074547411238913">https://twitter.com/deflatermouse/status/110074547411238913</a>'
 );
 
 done_testing();

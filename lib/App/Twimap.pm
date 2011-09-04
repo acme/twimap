@@ -7,6 +7,7 @@ use Email::MIME;
 use Email::MIME::Creator;
 use Encode;
 use HTML::Entities;
+use Web::oEmbed::Common;
 has 'mail_imapclient' => ( is => 'ro', isa => 'Mail::IMAPClient' );
 has 'net_twitter'     => ( is => 'rw', isa => 'Net::Twitter' );
 
@@ -42,33 +43,59 @@ sub tweet_to_email {
         $text = $tweet->{text};
     }
 
+    my $subject = $text;
+
+    my $html;
+
     if ( $tweet->{entities} && $tweet->{entities}->{urls} ) {
+
         foreach my $entity ( @{ $tweet->{entities}->{urls} } ) {
+            my $consumer = Web::oEmbed::Common->new();
+            $consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
+
+            my $response = $consumer->embed( $entity->{expanded_url} );
+            if ($response) {
+                $html = $response->render;
+            }
+            my $expanded_url = $entity->{expanded_url};
+            substr(
+                $subject,
+                $entity->{indices}->[0],
+                $entity->{indices}->[1] - $entity->{indices}->[0]
+            ) = $expanded_url;
             substr(
                 $text,
                 $entity->{indices}->[0],
                 $entity->{indices}->[1] - $entity->{indices}->[0]
-            ) = $entity->{expanded_url};
+            ) = qq{<a href="$expanded_url">$expanded_url</a>};
         }
     }
 
-    my $plain_text      = decode_entities($text);
-    my $utf8_plain_text = encode_utf8($plain_text);
+    my $utf8_subject = encode_utf8( decode_entities($subject) );
+    my $utf8_text    = encode_utf8($text);
+
+    my $body;
+    if ($html) {
+        $body
+            = qq{$utf8_text\n<br/><br/>\n$html<br/><br/>\n\n<a href="$url">$url</a>};
+    } else {
+        $body = qq{$utf8_text\n<br/><br/>\n<a href="$url">$url</a>};
+    }
 
     my $email = Email::MIME->create(
         attributes => {
-            content_type => "text/plain",
+            content_type => "text/html",
             disposition  => "inline",
             charset      => "utf-8",
         },
         header => [
             From    => Email::Address->new( $name, "$screen_name\@twitter" ),
-            Subject => $utf8_plain_text,
+            Subject => $utf8_subject,
             Date    => $date,
             'Message-Id'  => "<$tid\@twitter>",
             'In-Reply-To' => $in_reply_to,
         ],
-        body => $utf8_plain_text . "\n\n$url",
+        body => $body,
     );
 }
 
