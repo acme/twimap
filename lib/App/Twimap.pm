@@ -6,9 +6,10 @@ use Email::Date::Format qw(email_date);
 use Email::MIME;
 use Email::MIME::Creator;
 use Encode;
-use LWP::UserAgent;
 use HTML::Entities;
+use LWP::UserAgent;
 use Web::oEmbed::Common;
+use URI::WithBase;
 has 'mail_imapclient' => ( is => 'ro', isa => 'Mail::IMAPClient' );
 has 'net_twitter'     => ( is => 'rw', isa => 'Net::Twitter' );
 
@@ -119,8 +120,12 @@ sub expand_url {
     my $res = $ua->get($url);
     return $url unless $res->is_redirect;
     my $location = $res->header('Location');
-    return $self->expand_url($location) if defined $location;
-    return $url;
+    return $url unless defined $location;
+    unless ( $location =~ /^http/ ) {
+        my $uri = URI::WithBase->new( $location, $url )->abs;
+        return $self->expand_url($uri);
+    }
+    return $self->expand_url($location);
 }
 
 1;
