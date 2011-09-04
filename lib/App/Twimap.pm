@@ -49,7 +49,7 @@ sub tweet_to_email {
 
     if ( $tweet->{entities} && $tweet->{entities}->{urls} ) {
         foreach my $entity ( @{ $tweet->{entities}->{urls} } ) {
-            my $expanded_url = $entity->{expanded_url};
+            my $expanded_url = $entity->{expanded_url} || $entity->{url};
             next unless $expanded_url;
             substr(
                 $subject,
