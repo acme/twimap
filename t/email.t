@@ -284,8 +284,6 @@ $tweet = {
     'in_reply_to_screen_name' => undef
 };
 
-warn $twimap->tweet_to_email($tweet)->as_string;
-
 eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
     'From: "Tim Bunce" <timbunce@twitter>
