@@ -301,5 +301,209 @@ RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS: <a href="http://b
 <a href="https://twitter.com/timbunce/status/110113112895660033">https://twitter.com/timbunce/status/110113112895660033</a>'
 );
 
+$tweet = {
+    'retweeted' => 0,
+    'source' =>
+        '<a href="http://www.instapaper.com/" rel="nofollow">Instapaper</a>',
+    'favorited'     => 0,
+    'coordinates'   => undef,
+    'place'         => undef,
+    'retweet_count' => 3,
+    'entities'      => {
+        'hashtags'      => [],
+        'user_mentions' => [],
+        'urls'          => [
+            {   'expanded_url' => undef,
+                'url'          => 'http://j.mp/qRYF8q',
+                'indices'      => [ 31, 49 ]
+            }
+        ]
+    },
+    'truncated'                 => 0,
+    'created_at'                => 'Sun Sep 04 07:28:58 +0000 2011',
+    'in_reply_to_status_id_str' => undef,
+    'contributors'              => undef,
+    'text' =>
+        "\x{201c}Could You Afford to be Poor?\x{201d} http://j.mp/qRYF8q",
+    'in_reply_to_user_id' => undef,
+    'user'                => {
+        'friends_count'       => 633,
+        'follow_request_sent' => 0,
+        'profile_image_url' =>
+            'http://a3.twimg.com/profile_images/1393608228/wheeler_square_normal.jpg',
+        'profile_background_image_url_https' =>
+            'https://si0.twimg.com/images/themes/theme14/bg.gif',
+        'profile_sidebar_fill_color' => 'efefef',
+        'profile_background_color'   => '131516',
+        'notifications'              => 0,
+        'url'                        => 'http://www.justatheory.com/',
+        'id'                         => 656233,
+        'is_translator'              => 0,
+        'following'                  => 1,
+        'screen_name'                => 'theory',
+        'lang'                       => 'en',
+        'location'                   => 'Portland, OR, USA',
+        'followers_count'            => 1350,
+        'statuses_count'             => 10436,
+        'name'                       => 'David E. Wheeler',
+        'description' =>
+            'Perl, PostgreSQL, iOS hacker; US politics junkie; Webapp developer; Portvangelist; profane iconoclast.',
+        'favourites_count'        => 418,
+        'profile_background_tile' => 1,
+        'listed_count'            => 100,
+        'contributors_enabled'    => 0,
+        'profile_link_color'      => '009999',
+        'profile_image_url_https' =>
+            'https://si0.twimg.com/profile_images/1393608228/wheeler_square_normal.jpg',
+        'profile_sidebar_border_color' => 'eeeeee',
+        'created_at'                   => 'Wed Jan 17 19:31:24 +0000 2007',
+        'utc_offset'                   => -28800,
+        'verified'                     => 0,
+        'show_all_inline_media'        => 0,
+        'profile_background_image_url' =>
+            'http://a1.twimg.com/images/themes/theme14/bg.gif',
+        'default_profile'              => 0,
+        'protected'                    => 0,
+        'id_str'                       => '656233',
+        'profile_text_color'           => '333333',
+        'default_profile_image'        => 0,
+        'time_zone'                    => 'Pacific Time (US & Canada)',
+        'geo_enabled'                  => 1,
+        'profile_use_background_image' => 1
+    },
+    'id'                      => '110253001725321216',
+    'in_reply_to_status_id'   => undef,
+    'geo'                     => undef,
+    'possibly_sensitive'      => 0,
+    'in_reply_to_user_id_str' => undef,
+    'id_str'                  => '110253001725321216',
+    'in_reply_to_screen_name' => undef
+};
+
+eq_or_diff(
+    $twimap->tweet_to_email($tweet)->as_string,
+    'From: "David E. Wheeler" <theory@twitter> (theory)
+Subject: “Could You Afford to be Poor?” http://j.mp/qRYF8q
+Date: Sun, 4 Sep 2011 08:28:58 +0100
+Message-Id: <110253001725321216@twitter>
+In-Reply-To: 
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Disposition: inline
+
+“Could You Afford to be Poor?” <a href="http://j.mp/qRYF8q">http://j.mp/qRYF8q</a>
+<br/><br/>
+<a href="https://twitter.com/theory/status/110253001725321216">https://twitter.com/theory/status/110253001725321216</a>'
+);
+
+$tweet = {
+    'retweeted' => 0,
+    'source' =>
+        '<a href="http://itunes.apple.com/us/app/twitter/id409789998?mt=12" rel="nofollow">Twitter for Mac</a>',
+    'favorited'     => 0,
+    'coordinates'   => undef,
+    'place'         => undef,
+    'retweet_count' => 0,
+    'entities'      => {
+        'hashtags' => [
+            {   'text'    => 'SpaceChem',
+                'indices' => [ 108, 118 ]
+            }
+        ],
+        'user_mentions' => [],
+        'urls'          => [
+            {   'display_url' => "spacechem.net/solution/no-or\x{2026}",
+                'expanded_url' =>
+                    'http://spacechem.net/solution/no-ordinary-headache/22106',
+                'url'     => 'http://t.co/83GKUnF',
+                'indices' => [ 42, 61 ]
+            },
+            {   'display_url' => "spacechem.net/solution/no-or\x{2026}",
+                'expanded_url' =>
+                    'http://spacechem.net/solution/no-ordinary-headache/1717',
+                'url'     => 'http://t.co/YavM3cs',
+                'indices' => [ 87, 106 ]
+            }
+        ]
+    },
+    'truncated'                 => 0,
+    'created_at'                => 'Sun Sep 04 06:28:25 +0000 2011',
+    'in_reply_to_status_id_str' => undef,
+    'contributors'              => undef,
+    'text' =>
+        'The difference between a good programmer (http://t.co/83GKUnF) and a GREAT programmer (http://t.co/YavM3cs) #SpaceChem',
+    'in_reply_to_user_id' => undef,
+    'user'                => {
+        'friends_count'       => 202,
+        'follow_request_sent' => 0,
+        'profile_image_url' =>
+            'http://a3.twimg.com/profile_images/1351310559/MSCHWERN_HAS_A_PAUSEID_normal.jpg',
+        'profile_background_image_url_https' =>
+            'https://si0.twimg.com/profile_background_images/2458594/It_s_A_Waffle_Window_Day_.jpg',
+        'profile_sidebar_fill_color' => 'A8FF82',
+        'profile_background_color'   => 'F36A28',
+        'notifications'              => 0,
+        'url'                        => 'http://schwern.net',
+        'id'                         => 8263212,
+        'is_translator'              => 0,
+        'following'                  => 1,
+        'screen_name'                => 'schwern',
+        'lang'                       => 'en',
+        'location'                   => 'Portland, OR, USA',
+        'followers_count'            => 960,
+        'statuses_count'             => 4342,
+        'name'                       => 'Schwern',
+        'description'      => 'Bystanders were amazed at the volume of blood',
+        'favourites_count' => 0,
+        'profile_background_tile' => 0,
+        'listed_count'            => 139,
+        'contributors_enabled'    => 0,
+        'profile_link_color'      => '0000ff',
+        'profile_image_url_https' =>
+            'https://si0.twimg.com/profile_images/1351310559/MSCHWERN_HAS_A_PAUSEID_normal.jpg',
+        'profile_sidebar_border_color' => '41E62D',
+        'created_at'                   => 'Sat Aug 18 09:16:37 +0000 2007',
+        'utc_offset'                   => -28800,
+        'verified'                     => 0,
+        'show_all_inline_media'        => 0,
+        'profile_background_image_url' =>
+            'http://a1.twimg.com/profile_background_images/2458594/It_s_A_Waffle_Window_Day_.jpg',
+        'default_profile'              => 0,
+        'protected'                    => 0,
+        'id_str'                       => '8263212',
+        'profile_text_color'           => '000000',
+        'default_profile_image'        => 0,
+        'time_zone'                    => 'Pacific Time (US & Canada)',
+        'geo_enabled'                  => 0,
+        'profile_use_background_image' => 1
+    },
+    'id'                      => '110237761818210305',
+    'in_reply_to_status_id'   => undef,
+    'geo'                     => undef,
+    'possibly_sensitive'      => 0,
+    'in_reply_to_user_id_str' => undef,
+    'id_str'                  => '110237761818210305',
+    'in_reply_to_screen_name' => undef
+};
+
+eq_or_diff(
+    $twimap->tweet_to_email($tweet)->as_string,
+    'From: "Schwern" <schwern@twitter> (schwern)
+Subject: The difference between a good programmer
+ (http://spacechem.net/solution/no-ordinary-headache/22106) and a GREAT
+ programmer (http://spacechem.net/solution/no-ordinary-headache/1717)
+ #SpaceChem
+Date: Sun, 4 Sep 2011 07:28:25 +0100
+Message-Id: <110237761818210305@twitter>
+In-Reply-To: 
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Disposition: inline
+
+The difference between a good programmer (<a href="http://spacechem.net/solution/no-ordinary-headache/22106">http://spacechem.net/solution/no-ordinary-headache/22106</a>) and a GREAT programmer (<a href="http://spacechem.net/solution/no-ordinary-headache/1717">http://spacechem.net/solution/no-ordinary-headache/1717</a>) #SpaceChem
+<br/><br/>
+<a href="https://twitter.com/schwern/status/110237761818210305">https://twitter.com/schwern/status/110237761818210305</a>'
+);
+
 done_testing();
 

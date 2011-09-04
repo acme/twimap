@@ -43,7 +43,9 @@ sub tweet_to_email {
         $text = $tweet->{text};
     }
 
-    my $subject = $text;
+    my $subject        = $text;
+    my $subject_offset = 0;
+    my $text_offset    = 0;
 
     my $html;
 
@@ -53,14 +55,20 @@ sub tweet_to_email {
             next unless $expanded_url;
             substr(
                 $subject,
-                $entity->{indices}->[0],
+                $entity->{indices}->[0] + $subject_offset,
                 $entity->{indices}->[1] - $entity->{indices}->[0]
             ) = $expanded_url;
+            $subject_offset
+                += length($expanded_url) - length( $entity->{url} );
+
+            my $href = qq{<a href="$expanded_url">$expanded_url</a>};
             substr(
                 $text,
-                $entity->{indices}->[0],
+                $entity->{indices}->[0] + $text_offset,
                 $entity->{indices}->[1] - $entity->{indices}->[0]
-            ) = qq{<a href="$expanded_url">$expanded_url</a>};
+            ) = $href;
+            $text_offset += length($href) - length( $entity->{url} );
+
             my $consumer = Web::oEmbed::Common->new();
             $consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
             my $response = $consumer->embed($expanded_url);
