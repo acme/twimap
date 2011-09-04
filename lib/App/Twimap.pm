@@ -36,7 +36,7 @@ sub tweet_to_email {
     my $text;
     if ( $tweet->{retweeted_status} ) {
         $text
-            = 'RT '
+            = 'RT @'
             . $tweet->{retweeted_status}->{user}->{screen_name} . ': '
             . $tweet->{retweeted_status}->{text};
     } else {
@@ -48,16 +48,9 @@ sub tweet_to_email {
     my $html;
 
     if ( $tweet->{entities} && $tweet->{entities}->{urls} ) {
-
         foreach my $entity ( @{ $tweet->{entities}->{urls} } ) {
-            my $consumer = Web::oEmbed::Common->new();
-            $consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
-
-            my $response = $consumer->embed( $entity->{expanded_url} );
-            if ($response) {
-                $html = $response->render;
-            }
             my $expanded_url = $entity->{expanded_url};
+            next unless $expanded_url;
             substr(
                 $subject,
                 $entity->{indices}->[0],
@@ -68,6 +61,10 @@ sub tweet_to_email {
                 $entity->{indices}->[0],
                 $entity->{indices}->[1] - $entity->{indices}->[0]
             ) = qq{<a href="$expanded_url">$expanded_url</a>};
+            my $consumer = Web::oEmbed::Common->new();
+            $consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
+            my $response = $consumer->embed($expanded_url);
+            $html = encode_utf8( $response->render ) if $response;
         }
     }
 
