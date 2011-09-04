@@ -90,7 +90,7 @@ my $tweet = {
 
 eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
-    'From: "Simon Wistow" <deflatermouse@twitter>
+    'From: "Simon Wistow" <deflatermouse@twitter> (deflatermouse)
 Subject: Breakfast http://lockerz.com/s/135515455
 Date: Sat, 3 Sep 2011 20:39:51 +0100
 Message-Id: <110074547411238913@twitter>
@@ -286,7 +286,7 @@ $tweet = {
 
 eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
-    'From: "Tim Bunce" <timbunce@twitter>
+    'From: "Tim Bunce" <timbunce@twitter> (timbunce)
 Subject: RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS:
  http://bit.ly/nvlT9z (via @tapbot_paul)
 Date: Sat, 3 Sep 2011 23:13:06 +0100

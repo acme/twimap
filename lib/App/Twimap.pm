@@ -86,9 +86,11 @@ sub tweet_to_email {
             charset      => "utf-8",
         },
         header => [
-            From    => Email::Address->new( $name, "$screen_name\@twitter" ),
-            Subject => $utf8_subject,
-            Date    => $date,
+            From => Email::Address->new(
+                $name, "$screen_name\@twitter", "($screen_name)"
+            ),
+            Subject       => $utf8_subject,
+            Date          => $date,
             'Message-Id'  => "<$tid\@twitter>",
             'In-Reply-To' => $in_reply_to,
         ],
