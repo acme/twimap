@@ -110,7 +110,6 @@ sub tweet_to_email {
 
 sub expand_url {
     my ( $self, $url ) = @_;
-    warn "expand_url $url...";
     my $ua = LWP::UserAgent->new(
         env_proxy             => 1,
         timeout               => 30,
