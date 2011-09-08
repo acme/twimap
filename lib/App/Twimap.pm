@@ -73,7 +73,7 @@ sub tweet_to_email {
             $text_offset += length($href) - length( $entity->{url} );
 
             my $consumer = Web::oEmbed::Common->new();
-            $consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
+            #$consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
             my $response = $consumer->embed($expanded_url);
             $html = encode_utf8( $response->render ) if $response;
         }
