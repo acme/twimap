@@ -197,6 +197,7 @@ sub sync_home_timeline {
 
 sub sync_replies {
     my $self    = shift;
+    my $twitter = $self->net_twitter;
     my $imap    = $self->mail_imapclient;
     my $mailbox = $self->mailbox;
     my $tids    = $self->imap_tids;
@@ -205,37 +206,27 @@ sub sync_replies {
 
     $self->select_mailbox;
 
+    my @todo;
     my $replies = $imap->fetch_hash('BODY.PEEK[HEADER.FIELDS (IN-REPLY-TO)]')
         or die "Fetch hash $mailbox error: ", $imap->LastError;
     foreach my $uid ( keys %$replies ) {
         my $header = $replies->{$uid}->{'BODY[HEADER.FIELDS (IN-REPLY-TO)]'};
         my ($tid) = $header =~ /In-Reply-To: <(\d+)\@twitter>/;
         next unless $tid;
+        push @todo, $tid;
+    }
+
+    foreach my $tid (@todo) {
         next if $tids->{$tid};
-        $self->fetch_tid($tid);
+        warn "fetching $tid...";
+        my $tweet = $twitter->show_status( $tid, { include_entities => 1 } );
+        my $in_reply_to_status_id = $tweet->{in_reply_to_status_id};
+        push @todo, $in_reply_to_status_id if $in_reply_to_status_id;
+        my $email = $self->tweet_to_email($tweet);
+        $self->append_email($email);
+        $tids->{$tid} = 1;
         sleep 30;
     }
-}
-
-sub fetch_tid {
-    my ( $self, $tid ) = @_;
-    my $twitter = $self->net_twitter;
-
-    warn "Fetching tweet $tid...";
-
-    my $tweet = $twitter->show_status( $tid, { include_entities => 1 } );
-
-    #       warn encode_json($tweet);
-    #use Data::Dumper; warn Dumper $tweet;
-
-    warn $tweet->{created_at} . ' ' . $tweet->{text};
-
-    my $email = $self->tweet_to_email($tweet);
-
-    #warn $email->as_string;
-    $self->append_email($email);
-
-    #say $uidort;
 }
 
 sub append_email {
