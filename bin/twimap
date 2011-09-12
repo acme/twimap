@@ -1,0 +1,29 @@
+#!/home/acme/perl-5.12.3/bin/perl
+use strict;
+use warnings;
+use 5.12.0;
+use lib 'lib';
+use App::Twimap;
+use Config::Tiny;
+use Mail::IMAPClient;
+use Net::Twitter;
+
+my $config = Config::Tiny->read( shift || 'twimap.conf' );
+$config->{imap}->{Uid}       = 1;
+$config->{twitter}->{traits} = [qw/OAuth API::REST/];
+
+my $mailbox = $config->{_}->{mailbox} || die "No mailbox";
+
+my $imap = Mail::IMAPClient->new( %{ $config->{imap} } )
+    or die "new failed: $@\n";
+
+my $twitter = Net::Twitter->new( %{ $config->{twitter} } );
+
+my $twimap = App::Twimap->new(
+    mail_imapclient => $imap,
+    net_twitter     => $twitter,
+    mailbox         => $mailbox,
+);
+
+$twimap->sync_home_timeline;
+$twimap->sync_replies;
