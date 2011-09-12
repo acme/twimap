@@ -153,9 +153,9 @@ sub sync_home_timeline {
         while (1) {
             my $conf = {
                 count            => 100,
-                since_id         => $since_id,
                 include_entities => 1
             };
+            $conf->{since_id} = $since_id if $since_id;
             $conf->{max_id} = $max_id if $max_id;
             eval {
                 $tweets = $twitter->home_timeline($conf);
