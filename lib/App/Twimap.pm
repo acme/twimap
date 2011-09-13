@@ -83,8 +83,7 @@ sub tweet_to_email {
         }
     }
 
-    my $utf8_subject = encode_utf8( decode_entities($subject) );
-    my $utf8_text    = encode_utf8($text);
+    my $utf8_text = encode_utf8($text);
 
     my $body;
     if ($html) {
@@ -97,10 +96,13 @@ sub tweet_to_email {
     my $from = Email::Address->new( $name, "$screen_name\@twitter",
         "($screen_name)" );
 
-    my $from_header = encode( 'MIME-Header', $from );
-    $from_header =~ s/\n //g;
-    my $subject_header = encode( 'MIME-Header', $utf8_subject );
-    $subject_header =~ s/\n //g;
+    my @headers = (
+        From         => $from,
+        Subject      => decode_entities($subject),
+        Date         => $date,
+        'Message-Id' => "<$tid\@twitter>",
+    );
+    push @headers, 'In-Reply-To' => $in_reply_to if $in_reply_to;
 
     my $email = Email::MIME->create(
         attributes => {
@@ -108,14 +110,8 @@ sub tweet_to_email {
             disposition  => "inline",
             charset      => "utf-8",
         },
-        header => [
-            From          => $from_header,
-            Subject       => $subject_header,
-            Date          => $date,
-            'Message-Id'  => "<$tid\@twitter>",
-            'In-Reply-To' => $in_reply_to,
-        ],
-        body => $body,
+        header_str => \@headers,
+        body       => $body,
     );
 }
 

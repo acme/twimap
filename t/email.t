@@ -94,7 +94,6 @@ eq_or_diff(
 Subject: Breakfast http://lockerz.com/s/135515455
 Date: Sat, 3 Sep 2011 20:39:51 +0100
 Message-Id: <110074547411238913@twitter>
-In-Reply-To: 
 MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
@@ -288,10 +287,11 @@ eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
     'From: "Tim Bunce" <timbunce@twitter> (timbunce)
 Subject: RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS:
- http://www.theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/ (via @tapbot_paul)
+ http://www.
+ theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/ ( via
+ @tapbot_paul)
 Date: Sat, 3 Sep 2011 23:13:06 +0100
 Message-Id: <110113112895660033@twitter>
-In-Reply-To: 
 MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
@@ -384,10 +384,11 @@ eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
     'From: "David E. Wheeler" <theory@twitter> (theory)
 Subject:
- =?UTF-8?B?w6LCgMKcQ291bGQgWW91IEFmZm9yZCB0byBiZSBQb29y?=?=?UTF-8?B?w6LCgMKdIGh0dHA=?=://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html
+ =?UTF-8?Q?=E2=80=9CCould=20You=20Afford=20t?==?UTF-8?Q?o=20be=20Poor?=?
+ =?UTF-8?Q?=E2=80=9D=20http?=://ehrenreich.blogs.com/barbaras_blog/2006/07/
+ could_you_affor.html
 Date: Sun, 4 Sep 2011 08:28:58 +0100
 Message-Id: <110253001725321216@twitter>
-In-Reply-To: 
 MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
@@ -491,12 +492,11 @@ eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
     'From: "Schwern" <schwern@twitter> (schwern)
 Subject: The difference between a good programmer
- (http://spacechem.net/solution/no-ordinary-headache/22106) and a GREAT
- programmer (http://spacechem.net/solution/no-ordinary-headache/1717)
+ (http://spacechem.net/solution/ no-ordinary-headache/22106) and a GREAT
+ programmer (http://spacechem.net/ solution/no-ordinary-headache/1717)
  #SpaceChem
 Date: Sun, 4 Sep 2011 07:28:25 +0100
 Message-Id: <110237761818210305@twitter>
-In-Reply-To: 
 MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
@@ -504,6 +504,120 @@ Content-Disposition: inline
 The difference between a good programmer (<a href="http://spacechem.net/solution/no-ordinary-headache/22106">http://spacechem.net/solution/no-ordinary-headache/22106</a>) and a GREAT programmer (<a href="http://spacechem.net/solution/no-ordinary-headache/1717">http://spacechem.net/solution/no-ordinary-headache/1717</a>) #SpaceChem
 <br/><br/>
 <a href="https://twitter.com/schwern/status/110237761818210305">https://twitter.com/schwern/status/110237761818210305</a>'
+);
+
+$tweet = {
+    'source' =>
+        '<a href="http://www.hootsuite.com" rel="nofollow">HootSuite</a>',
+    'retweeted'     => 0,
+    'favorited'     => 0,
+    'coordinates'   => undef,
+    'place'         => undef,
+    'retweet_count' => 0,
+    'entities'      => {
+        'hashtags'      => [],
+        'user_mentions' => [
+            {   'name'        => 'Shingo Hatazawa',
+                'id'          => 135685499,
+                'indices'     => [ 18, 29 ],
+                'id_str'      => '135685499',
+                'screen_name' => 'lunashingo'
+            },
+            {   'name'        => 'Dan Kogai',
+                'id'          => 4143991,
+                'indices'     => [ 80, 89 ],
+                'id_str'      => '4143991',
+                'screen_name' => 'dankogai'
+            }
+        ],
+        'urls' => [
+            {   'expanded_url' => undef,
+                'url'          => 'http://j.mp/fzyiTx',
+                'indices'      => [ 91, 109 ]
+            }
+        ]
+    },
+    'truncated'                 => 0,
+    'in_reply_to_status_id_str' => undef,
+    'created_at'                => 'Tue Sep 13 16:27:16 +0000 2011',
+    'contributors'              => undef,
+    'text' =>
+        "\x{6539}\x{3081}\x{3066}\x{5fa1}\x{793c}\x{306a}\x{3046}m(__)m&lt; \@lunashingo: reply\x{3042}\x{308a}\x{304c}\x{3068}\x{3046}\x{3054}\x{3056}\x{3044}\x{307e}\x{3059}\x{3002}\x{65e9}\x{901f}\x{8cfc}\x{5165}\x{3057}\x{307e}\x{3057}\x{305f}\x{3002}\x{300c}\x{65b0}\x{66f8}\x{304c}\x{30d9}\x{30b9}\x{30c8}\x{300d}\x{3082}\x{597d}\x{304d}\x{3067}\x{3088}\x{304f}\x{8aad}\x{3093}\x{3067}\x{3044}\x{307e}\x{3059}&lt;\@dankogai: http://j.mp/fzyiTx",
+    'in_reply_to_user_id' => undef,
+    'user'                => {
+        'friends_count'       => 2584,
+        'follow_request_sent' => 0,
+        'profile_background_image_url_https' =>
+            'https://si0.twimg.com/profile_background_images/55559817/hisashinis-512x512.jpg',
+        'profile_image_url' =>
+            'http://a3.twimg.com/profile_images/1198753933/dan-by-tanaka_normal.png',
+        'profile_sidebar_fill_color' => 'DDEEF6',
+        'profile_background_color'   => 'C0DEED',
+        'notifications'              => 0,
+        'url'                        => 'http://blog.livedoor.jp/dankogai/',
+        'id'                         => 4143991,
+        'is_translator'              => 0,
+        'following'                  => 1,
+        'screen_name'                => 'dankogai',
+        'lang'                       => 'en',
+        'location'                   => 'In front of your timeline',
+        'followers_count'            => 44914,
+        'statuses_count'             => 20061,
+        'name'                       => 'Dan Kogai',
+        'description' =>
+            '404 Blog Not Found -- only tweets. http://www.google.com/search?q=dankogai',
+        'favourites_count'        => 11,
+        'profile_background_tile' => 1,
+        'listed_count'            => 5763,
+        'contributors_enabled'    => 0,
+        'profile_link_color'      => '0084B4',
+        'profile_image_url_https' =>
+            'https://si0.twimg.com/profile_images/1198753933/dan-by-tanaka_normal.png',
+        'profile_sidebar_border_color' => 'C0DEED',
+        'created_at'                   => 'Wed Apr 11 08:26:14 +0000 2007',
+        'utc_offset'                   => 32400,
+        'verified'                     => 0,
+        'profile_background_image_url' =>
+            'http://a3.twimg.com/profile_background_images/55559817/hisashinis-512x512.jpg',
+        'show_all_inline_media'        => 0,
+        'protected'                    => 0,
+        'default_profile'              => 0,
+        'id_str'                       => '4143991',
+        'profile_text_color'           => '333333',
+        'default_profile_image'        => 0,
+        'time_zone'                    => 'Tokyo',
+        'profile_use_background_image' => 1,
+        'geo_enabled'                  => 1
+    },
+    'id'                      => '113649960246980608',
+    'in_reply_to_status_id'   => undef,
+    'geo'                     => undef,
+    'possibly_sensitive'      => 0,
+    'in_reply_to_user_id_str' => undef,
+    'id_str'                  => '113649960246980608',
+    'in_reply_to_screen_name' => undef
+};
+
+eq_or_diff(
+    $twimap->tweet_to_email($tweet)->as_string,
+    qq{From: "Dan Kogai" <dankogai\@twitter> (dankogai)
+Subject:
+ =?UTF-8?Q?=E6=94=B9=E3=82=81=E3=81=A6=E5=BE=A1=E7=A4=BC=E3=81=AA=E3=81=86?=
+ =?UTF-8?Q?m?=(__)m< \@lunashingo:
+ =?UTF-8?Q?=20reply=E3=81=82=E3=82=8A=E3=81=8C=E3=81=A8=E3=81=86?=
+ =?UTF-8?Q?=E3=81=94=E3=81=96=E3=81=84=E3=81=BE=E3=81=99=E3=80=82=E6=97=A9?=
+ =?UTF-8?Q?=E9=80=9F=E8=B3=BC=E5=85=A5=E3=81=97=E3=81=BE=E3=81=97=E3=81=9F?=
+ =?UTF-8?Q?=E3=80=82=E3=80=8C=E6=96=B0=E6=9B=B8=E3=81=8C=E3=83=99=E3=82=B9?=
+ =?UTF-8?Q?=E3=83=88=E3=80=8D=E3=82=82=E5=A5=BD=E3=81=8D=E3=81=A7=E3=82=88?=
+ =?UTF-8?Q?=E3=81=8F=E8=AA=AD=E3=82=93=E3=81=A7=E3=81=84=E3=81=BE=E3=81=99?=
+ <\@dankogai: http://blog.livedoor.jp/dankogai/archives/51529999.html
+Date: Tue, 13 Sep 2011 17:27:16 +0100
+Message-Id: <113649960246980608\@twitter>
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Disposition: inline
+
+\x{e6}\x{94}\x{b9}\x{e3}\x{82}\x{81}\x{e3}\x{81}\x{a6}\x{e5}\x{be}\x{a1}\x{e7}\x{a4}\x{bc}\x{e3}\x{81}\x{aa}\x{e3}\x{81}\x{86}m(__)m&lt; \@lunashingo: reply\x{e3}\x{81}\x{82}\x{e3}\x{82}\x{8a}\x{e3}\x{81}\x{8c}\x{e3}\x{81}\x{a8}\x{e3}\x{81}\x{86}\x{e3}\x{81}\x{94}\x{e3}\x{81}\x{96}\x{e3}\x{81}\x{84}\x{e3}\x{81}\x{be}\x{e3}\x{81}\x{99}\x{e3}\x{80}\x{82}\x{e6}\x{97}\x{a9}\x{e9}\x{80}\x{9f}\x{e8}\x{b3}\x{bc}\x{e5}\x{85}\x{a5}\x{e3}\x{81}\x{97}\x{e3}\x{81}\x{be}\x{e3}\x{81}\x{97}\x{e3}\x{81}\x{9f}\x{e3}\x{80}\x{82}\x{e3}\x{80}\x{8c}\x{e6}\x{96}\x{b0}\x{e6}\x{9b}\x{b8}\x{e3}\x{81}\x{8c}\x{e3}\x{83}\x{99}\x{e3}\x{82}\x{b9}\x{e3}\x{83}\x{88}\x{e3}\x{80}\x{8d}\x{e3}\x{82}\x{82}\x{e5}\x{a5}\x{bd}\x{e3}\x{81}\x{8d}\x{e3}\x{81}\x{a7}\x{e3}\x{82}\x{88}\x{e3}\x{81}\x{8f}\x{e8}\x{aa}\x{ad}\x{e3}\x{82}\x{93}\x{e3}\x{81}\x{a7}\x{e3}\x{81}\x{84}\x{e3}\x{81}\x{be}\x{e3}\x{81}\x{99}&lt;\@dankogai: <a href="http://blog.livedoor.jp/dankogai/archives/51529999.html">http://blog.livedoor.jp/dankogai/archives/51529999.html</a>\n<br/><br/>\n<a href="https://twitter.com/dankogai/status/113649960246980608">https://twitter.com/dankogai/status/113649960246980608</a>}
 );
 
 done_testing();
