@@ -383,8 +383,8 @@ $tweet = {
 eq_or_diff(
     $twimap->tweet_to_email($tweet)->as_string,
     'From: "David E. Wheeler" <theory@twitter> (theory)
-Subject: “Could You Afford to be Poor?”
- http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html
+Subject:
+ =?UTF-8?B?w6LCgMKcQ291bGQgWW91IEFmZm9yZCB0byBiZSBQb29y?=?=?UTF-8?B?w6LCgMKdIGh0dHA=?=://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html
 Date: Sun, 4 Sep 2011 08:28:58 +0100
 Message-Id: <110253001725321216@twitter>
 In-Reply-To: 

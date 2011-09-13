@@ -94,6 +94,14 @@ sub tweet_to_email {
         $body = qq{$utf8_text\n<br/><br/>\n<a href="$url">$url</a>};
     }
 
+    my $from = Email::Address->new( $name, "$screen_name\@twitter",
+        "($screen_name)" );
+
+    my $from_header = encode( 'MIME-Header', $from );
+    $from_header =~ s/\n //g;
+    my $subject_header = encode( 'MIME-Header', $utf8_subject );
+    $subject_header =~ s/\n //g;
+
     my $email = Email::MIME->create(
         attributes => {
             content_type => "text/html",
@@ -101,10 +109,8 @@ sub tweet_to_email {
             charset      => "utf-8",
         },
         header => [
-            From => Email::Address->new(
-                $name, "$screen_name\@twitter", "($screen_name)"
-            ),
-            Subject       => $utf8_subject,
+            From          => $from_header,
+            Subject       => $subject_header,
             Date          => $date,
             'Message-Id'  => "<$tid\@twitter>",
             'In-Reply-To' => $in_reply_to,
@@ -156,7 +162,7 @@ sub sync_home_timeline {
                 include_entities => 1
             };
             $conf->{since_id} = $since_id if $since_id;
-            $conf->{max_id} = $max_id if $max_id;
+            $conf->{max_id}   = $max_id   if $max_id;
             eval {
                 $tweets = $twitter->home_timeline($conf);
                 warn Dumper( $twitter->get_error ) unless $tweets;
