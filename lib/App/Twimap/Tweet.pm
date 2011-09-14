@@ -154,3 +154,20 @@ sub oembed_url {
 }
 
 __PACKAGE__->meta->make_immutable;
+
+=head1 NAME
+
+App::Twimap::Tweet - Represent a Tweet and convert to email
+
+=head1 AUTHOR
+
+Leon Brocard <acme@astray.com>.
+
+=head1 COPYRIGHT
+
+Copyright (C) 2011, Leon Brocard
+
+=head1 LICENSE
+
+This module is free software; you can redistribute it or modify it
+under the same terms as Perl itself.
