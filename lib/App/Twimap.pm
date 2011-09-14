@@ -143,3 +143,61 @@ sub select_mailbox {
 __PACKAGE__->meta->make_immutable;
 
 1;
+
+=head1 NAME
+
+App::Twimap - Push your Twitter home timeline to an IMAP server
+
+=head1 SYNOPSIS
+
+  $ twimap twimap.conf
+
+=head1 DESCRIPTION
+
+Twitter is an online social networking and microblogging service. The Internet
+Message Access Protocol (IMAP) is an Internet standard protocols for e-mail
+retrieval from a server. This module stores your Twitter home timeline in a
+folder on an IMAP server.
+
+Why would you do this?
+
+=over 4
+
+=item * Offline access to your Twitter home timeline
+
+=item * Your email client can do message threading
+
+=item * Use multiple devices and they sync read messages
+
+=item * URLs are expanded
+
+=item * Images and videos are embedded via oEmbed
+
+=back
+
+To use this application you need to create a Twitter API application on:
+
+  https://dev.twitter.com/apps/new
+
+You need to use the examples/oauth_desktop.pl application distributed
+with Net::Twitter to obtain the OAuth tokens. First replace the consumer
+tokens with those of your application, then run the application and see
+oauth_desktop.dat.
+
+Create a twimap.conf (an example is shipped with this distribution)
+with the IMAP server details and Twitter access details.
+
+... and now you can run the application as in the synopsis.
+
+=head1 AUTHOR
+
+Leon Brocard <acme@astray.com>.
+
+=head1 COPYRIGHT
+
+Copyright (C) 2011, Leon Brocard
+
+=head1 LICENSE
+
+This module is free software; you can redistribute it or modify it
+under the same terms as Perl itself.
