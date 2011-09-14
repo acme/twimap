@@ -29,8 +29,8 @@ sub tweet_to_email {
 
     my $epoch       = $parser->parse_datetime( $tweet->{created_at} )->epoch;
     my $date        = email_date($epoch);
-    my $name        = encode_utf8( $tweet->{user}->{name} );
-    my $screen_name = encode_utf8( $tweet->{user}->{screen_name} );
+    my $name        = $tweet->{user}->{name};
+    my $screen_name = $tweet->{user}->{screen_name};
 
     my $in_reply_to_status_id = $tweet->{in_reply_to_status_id};
     my $in_reply_to
@@ -76,21 +76,20 @@ sub tweet_to_email {
             $text_offset += length($href) - length( $entity->{url} );
 
             my $consumer = Web::oEmbed::Common->new();
+            $consumer->agent->timeout(5);
 
             #$consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
             my $response = $consumer->embed($expanded_url);
-            $html = encode_utf8( $response->render ) if $response;
+            $html = $response->render if $response;
         }
     }
-
-    my $utf8_text = encode_utf8($text);
 
     my $body;
     if ($html) {
         $body
-            = qq{$utf8_text\n<br/><br/>\n$html<br/><br/>\n\n<a href="$url">$url</a>};
+            = qq{$text\n<br/><br/>\n$html<br/><br/>\n\n<a href="$url">$url</a>};
     } else {
-        $body = qq{$utf8_text\n<br/><br/>\n<a href="$url">$url</a>};
+        $body = qq{$text\n<br/><br/>\n<a href="$url">$url</a>};
     }
 
     my $from = Email::Address->new( $name, "$screen_name\@twitter",
@@ -169,10 +168,6 @@ sub sync_home_timeline {
         }
 
         foreach my $tweet (@$tweets) {
-
-            #        warn encode_json($tweet);
-            #use Data::Dumper; warn Dumper $tweet;
-            #exit;
             my $tid = $tweet->{id};
 
             $max_id = $tid unless $max_id;
@@ -181,18 +176,12 @@ sub sync_home_timeline {
             next if $tids->{$tid};
             $new_tweets++;
 
-            #warn $tid . ' ' . $tweet->{text};
-
-            #use YAML;
-            #warn Dump $tweet;
-
             my $email = $self->tweet_to_email($tweet);
-
-            warn $email->as_string;
             $self->append_email($email);
             $tids->{$tid} = 1;
         }
         last unless $new_tweets;
+        warn "sleeping...";
         sleep 30;
     }
 }
@@ -227,6 +216,7 @@ sub sync_replies {
         my $email = $self->tweet_to_email($tweet);
         $self->append_email($email);
         $tids->{$tid} = 1;
+        warn "sleeping...";
         sleep 30;
     }
 }
@@ -235,7 +225,9 @@ sub append_email {
     my ( $self, $email ) = @_;
     my $imap    = $self->mail_imapclient;
     my $mailbox = $self->mailbox;
-    my $uid     = $imap->append_string( $mailbox, $email->as_string )
+
+    my $uid
+        = $imap->append_string( $mailbox, encode_utf8( $email->as_string ) )
         or die "Could not append_string to $mailbox: ", $imap->LastError;
 }
 
@@ -243,7 +235,8 @@ sub expand_url {
     my ( $self, $url ) = @_;
     my $ua = LWP::UserAgent->new(
         env_proxy             => 1,
-        timeout               => 30,
+        timeout               => 5,
+        max_size              => 2048,
         agent                 => "Twimap",
         requests_redirectable => [],
     );
@@ -251,6 +244,7 @@ sub expand_url {
     return $url unless $res->is_redirect;
     my $location = $res->header('Location');
     return $url unless defined $location;
+
     unless ( $location =~ /^http/ ) {
         my $uri = URI::WithBase->new( $location, $url )->abs;
         return $self->expand_url($uri);
