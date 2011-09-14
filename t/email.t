@@ -393,7 +393,7 @@ MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
-“Could You Afford to be Poor?” <a href="http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html">http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html</a>
+\x{201c}Could You Afford to be Poor?\x{201d} <a href="http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html">http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html</a>
 <br/><br/>
 <a href="https://twitter.com/theory/status/110253001725321216">https://twitter.com/theory/status/110253001725321216</a>'
 );
@@ -617,7 +617,9 @@ MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
-\x{e6}\x{94}\x{b9}\x{e3}\x{82}\x{81}\x{e3}\x{81}\x{a6}\x{e5}\x{be}\x{a1}\x{e7}\x{a4}\x{bc}\x{e3}\x{81}\x{aa}\x{e3}\x{81}\x{86}m(__)m&lt; \@lunashingo: reply\x{e3}\x{81}\x{82}\x{e3}\x{82}\x{8a}\x{e3}\x{81}\x{8c}\x{e3}\x{81}\x{a8}\x{e3}\x{81}\x{86}\x{e3}\x{81}\x{94}\x{e3}\x{81}\x{96}\x{e3}\x{81}\x{84}\x{e3}\x{81}\x{be}\x{e3}\x{81}\x{99}\x{e3}\x{80}\x{82}\x{e6}\x{97}\x{a9}\x{e9}\x{80}\x{9f}\x{e8}\x{b3}\x{bc}\x{e5}\x{85}\x{a5}\x{e3}\x{81}\x{97}\x{e3}\x{81}\x{be}\x{e3}\x{81}\x{97}\x{e3}\x{81}\x{9f}\x{e3}\x{80}\x{82}\x{e3}\x{80}\x{8c}\x{e6}\x{96}\x{b0}\x{e6}\x{9b}\x{b8}\x{e3}\x{81}\x{8c}\x{e3}\x{83}\x{99}\x{e3}\x{82}\x{b9}\x{e3}\x{83}\x{88}\x{e3}\x{80}\x{8d}\x{e3}\x{82}\x{82}\x{e5}\x{a5}\x{bd}\x{e3}\x{81}\x{8d}\x{e3}\x{81}\x{a7}\x{e3}\x{82}\x{88}\x{e3}\x{81}\x{8f}\x{e8}\x{aa}\x{ad}\x{e3}\x{82}\x{93}\x{e3}\x{81}\x{a7}\x{e3}\x{81}\x{84}\x{e3}\x{81}\x{be}\x{e3}\x{81}\x{99}&lt;\@dankogai: <a href="http://blog.livedoor.jp/dankogai/archives/51529999.html">http://blog.livedoor.jp/dankogai/archives/51529999.html</a>\n<br/><br/>\n<a href="https://twitter.com/dankogai/status/113649960246980608">https://twitter.com/dankogai/status/113649960246980608</a>}
+\x{6539}\x{3081}\x{3066}\x{5fa1}\x{793c}\x{306a}\x{3046}m(__)m&lt; \@lunashingo: reply\x{3042}\x{308a}\x{304c}\x{3068}\x{3046}\x{3054}\x{3056}\x{3044}\x{307e}\x{3059}\x{3002}\x{65e9}\x{901f}\x{8cfc}\x{5165}\x{3057}\x{307e}\x{3057}\x{305f}\x{3002}\x{300c}\x{65b0}\x{66f8}\x{304c}\x{30d9}\x{30b9}\x{30c8}\x{300d}\x{3082}\x{597d}\x{304d}\x{3067}\x{3088}\x{304f}\x{8aad}\x{3093}\x{3067}\x{3044}\x{307e}\x{3059}&lt;\@dankogai: <a href="http://blog.livedoor.jp/dankogai/archives/51529999.html">http://blog.livedoor.jp/dankogai/archives/51529999.html</a>
+<br/><br/>
+<a href="https://twitter.com/dankogai/status/113649960246980608">https://twitter.com/dankogai/status/113649960246980608</a>}
 );
 
 done_testing();
