@@ -1,12 +1,9 @@
 package App::Twimap;
 use Moose;
-use DateTime;
-use DateTime::Format::Strptime;
-use Email::Date::Format qw(email_date);
+use App::Twimap::Tweet;
 use Email::MIME;
 use Email::MIME::Creator;
 use Encode;
-use HTML::Entities;
 use List::Util qw(max);
 use LWP::UserAgent;
 use Web::oEmbed::Common;
@@ -15,104 +12,6 @@ has 'mail_imapclient' =>
     ( is => 'ro', isa => 'Mail::IMAPClient', required => 1 );
 has 'net_twitter' => ( is => 'ro', isa => 'Net::Twitter', required => 1 );
 has 'mailbox'     => ( is => 'ro', isa => 'Str',          required => 1 );
-
-my $parser = DateTime::Format::Strptime->new(
-    pattern  => '%a %b %d %T %z %Y',
-    locale   => 'en_GB',
-    on_error => 'croak',
-);
-
-sub tweet_to_email {
-    my ( $self, $tweet ) = @_;
-
-    my $tid = $tweet->{id};
-
-    my $epoch       = $parser->parse_datetime( $tweet->{created_at} )->epoch;
-    my $date        = email_date($epoch);
-    my $name        = $tweet->{user}->{name};
-    my $screen_name = $tweet->{user}->{screen_name};
-
-    my $in_reply_to_status_id = $tweet->{in_reply_to_status_id};
-    my $in_reply_to
-        = $in_reply_to_status_id
-        ? "<$in_reply_to_status_id\@twitter>"
-        : '';
-    my $url = "https://twitter.com/$screen_name/status/$tid";
-    my $text;
-    if ( $tweet->{retweeted_status} ) {
-        $text
-            = 'RT @'
-            . $tweet->{retweeted_status}->{user}->{screen_name} . ': '
-            . $tweet->{retweeted_status}->{text};
-    } else {
-        $text = $tweet->{text};
-    }
-
-    my $subject        = $text;
-    my $subject_offset = 0;
-    my $text_offset    = 0;
-
-    my $html;
-
-    if ( $tweet->{entities} && $tweet->{entities}->{urls} ) {
-        foreach my $entity ( @{ $tweet->{entities}->{urls} } ) {
-            my $expanded_url = $entity->{expanded_url} || $entity->{url};
-            next unless $expanded_url;
-            $expanded_url = $self->expand_url($expanded_url);
-            substr(
-                $subject,
-                $entity->{indices}->[0] + $subject_offset,
-                $entity->{indices}->[1] - $entity->{indices}->[0]
-            ) = $expanded_url;
-            $subject_offset
-                += length($expanded_url) - length( $entity->{url} );
-
-            my $href = qq{<a href="$expanded_url">$expanded_url</a>};
-            substr(
-                $text,
-                $entity->{indices}->[0] + $text_offset,
-                $entity->{indices}->[1] - $entity->{indices}->[0]
-            ) = $href;
-            $text_offset += length($href) - length( $entity->{url} );
-
-            my $consumer = Web::oEmbed::Common->new();
-            $consumer->agent->timeout(5);
-
-            #$consumer->set_embedly_api_key('0123ABCD0123ABCD0123ABCD');
-            my $response = $consumer->embed($expanded_url);
-            $html = $response->render if $response;
-        }
-    }
-
-    my $body;
-    if ($html) {
-        $body
-            = qq{$text\n<br/><br/>\n$html<br/><br/>\n\n<a href="$url">$url</a>};
-    } else {
-        $body = qq{$text\n<br/><br/>\n<a href="$url">$url</a>};
-    }
-
-    my $from = Email::Address->new( $name, "$screen_name\@twitter",
-        "($screen_name)" );
-
-    my @headers = (
-        From         => $from,
-        Subject      => decode_entities($subject),
-        Date         => $date,
-        'Message-Id' => "<$tid\@twitter>",
-    );
-    push @headers, 'In-Reply-To' => $in_reply_to if $in_reply_to;
-
-    my $email = Email::MIME->create(
-        attributes => {
-            content_type => "text/html",
-            disposition  => "inline",
-            charset      => "utf-8",
-        },
-        header_str => \@headers,
-        body       => $body,
-    );
-}
 
 sub imap_tids {
     my $self    = shift;
@@ -167,8 +66,9 @@ sub sync_home_timeline {
             sleep 10;
         }
 
-        foreach my $tweet (@$tweets) {
-            my $tid = $tweet->{id};
+        foreach my $data (@$tweets) {
+            my $tweet = App::Twimap::Tweet->new( data => $data );
+            my $tid = $tweet->id;
 
             $max_id = $tid unless $max_id;
             $max_id = $tid if $tid < $max_id;
@@ -176,7 +76,7 @@ sub sync_home_timeline {
             next if $tids->{$tid};
             $new_tweets++;
 
-            my $email = $self->tweet_to_email($tweet);
+            my $email = $tweet->to_email;
             $self->append_email($email);
             $tids->{$tid} = 1;
         }
@@ -210,10 +110,11 @@ sub sync_replies {
     foreach my $tid (@todo) {
         next if $tids->{$tid};
         warn "fetching $tid...";
-        my $tweet = $twitter->show_status( $tid, { include_entities => 1 } );
-        my $in_reply_to_status_id = $tweet->{in_reply_to_status_id};
-        push @todo, $in_reply_to_status_id if $in_reply_to_status_id;
-        my $email = $self->tweet_to_email($tweet);
+        my $data = $twitter->show_status( $tid, { include_entities => 1 } );
+        my $tweet = App::Twimap::Tweet->new( data => $data );
+        push @todo, $tweet->in_reply_to_status_id
+            if $tweet->in_reply_to_status_id;
+        my $email = $tweet->to_email;
         $self->append_email($email);
         $tids->{$tid} = 1;
         warn "sleeping...";
@@ -231,27 +132,6 @@ sub append_email {
         or die "Could not append_string to $mailbox: ", $imap->LastError;
 }
 
-sub expand_url {
-    my ( $self, $url ) = @_;
-    my $ua = LWP::UserAgent->new(
-        env_proxy             => 1,
-        timeout               => 5,
-        max_size              => 2048,
-        agent                 => "Twimap",
-        requests_redirectable => [],
-    );
-    my $res = $ua->get($url);
-    return $url unless $res->is_redirect;
-    my $location = $res->header('Location');
-    return $url unless defined $location;
-
-    unless ( $location =~ /^http/ ) {
-        my $uri = URI::WithBase->new( $location, $url )->abs;
-        return $self->expand_url($uri);
-    }
-    return $self->expand_url($location);
-}
-
 sub select_mailbox {
     my $self    = shift;
     my $imap    = $self->mail_imapclient;
@@ -259,5 +139,7 @@ sub select_mailbox {
     $imap->select($mailbox)
         or die "Select $mailbox error: ", $imap->LastError;
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
