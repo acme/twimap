@@ -89,6 +89,8 @@ sub to_email {
         }
     }
 
+    $subject =~ s{\n}{ }g;
+
     my $body;
     if ($html) {
         $body
