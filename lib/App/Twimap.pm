@@ -7,6 +7,7 @@ use Encode;
 use List::Util qw(max);
 use LWP::UserAgent;
 use Web::oEmbed::Common;
+use TryCatch;
 use URI::WithBase;
 has 'mail_imapclient' =>
     ( is => 'ro', isa => 'Mail::IMAPClient', required => 1 );
@@ -111,7 +112,14 @@ sub sync_replies {
     foreach my $tid (@todo) {
         next if $tids->{$tid};
         warn "fetching $tid...";
-        my $data = $twitter->show_status( $tid, { include_entities => 1 } );
+        my $data;
+        try {
+            $data = $twitter->show_status( $tid, { include_entities => 1 } );
+        }
+        catch($err) {
+            warn $err;
+            return;
+        };
         my $tweet = App::Twimap::Tweet->new( data => $data );
         push @todo, $tweet->in_reply_to_status_id
             if $tweet->in_reply_to_status_id;

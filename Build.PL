@@ -33,6 +33,7 @@ my $build = Module::Build->new(
         'Moose'                      => 0,
         'Net::Twitter'               => 0,
         'Web::oEmbed::Common'        => 0,
+        'TryCatch'                   => 0,
         'URI::WithBase'              => 0,
     },
     sign => 1,
