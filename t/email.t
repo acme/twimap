@@ -96,6 +96,21 @@ Subject: Breakfast http://lockerz.com/s/135515455
 Date: Sat, 3 Sep 2011 20:39:51 +0100
 Message-Id: <110074547411238913@twitter>
 MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="1317546824.2C8b2BC51.4794"; charset="utf-8"
+
+
+--1317546824.2C8b2BC51.4794
+Date: Sat, 3 Sep 2011 20:39:51 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+
+Breakfast http://lockerz.com/s/135515455
+
+https://twitter.com/deflatermouse/status/110074547411238913
+--1317546824.2C8b2BC51.4794
+Date: Sat, 3 Sep 2011 20:39:51 +0100
+MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
@@ -103,7 +118,9 @@ Breakfast <a href="http://lockerz.com/s/135515455">http://lockerz.com/s/13551545
 <br/><br/>
 <a href="http://c0013938.cdn1.cloudfiles.rackspacecloud.com/x2_813cd3f" title="x2_813cd3f"><img alt="x2_813cd3f" height="79" src="http://c0013942.cdn1.cloudfiles.rackspacecloud.com/x2_813cd3f" width="79" /></a><br/><br/>
 
-<a href="https://twitter.com/deflatermouse/status/110074547411238913">https://twitter.com/deflatermouse/status/110074547411238913</a>'
+<a href="https://twitter.com/deflatermouse/status/110074547411238913">https://twitter.com/deflatermouse/status/110074547411238913</a>
+--1317546824.2C8b2BC51.4794--
+'
 );
 
 $tweet = App::Twimap::Tweet->new(
@@ -296,12 +313,33 @@ Subject: RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS:
 Date: Sat, 3 Sep 2011 23:13:06 +0100
 Message-Id: <110113112895660033@twitter>
 MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="1317546824.2C8b2BC51.4794"; charset="utf-8"
+
+
+--1317546824.2C8b2BC51.4794
+Date: Sat, 3 Sep 2011 23:13:06 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+
+RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS:
+http://www.theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/
+(via @tapbot_paul)
+
+https://twitter.com/timbunce/status/110113112895660033
+--1317546824.2C8b2BC51.4794
+Date: Sat, 3 Sep 2011 23:13:06 +0100
+MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
 RT @siracusa: More on iCloud, Microsoft Azure, and Amazon AWS: <a href="http://www.theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/">http://www.theregister.co.uk/2011/09/02/icloud_runs_on_microsoft_azure_and_amazon/</a> (via @tapbot_paul)
 <br/><br/>
-<a href="https://twitter.com/timbunce/status/110113112895660033">https://twitter.com/timbunce/status/110113112895660033</a>'
+<br/><br/>
+
+<a href="https://twitter.com/timbunce/status/110113112895660033">https://twitter.com/timbunce/status/110113112895660033</a>
+--1317546824.2C8b2BC51.4794--
+'
 );
 
 $tweet = App::Twimap::Tweet->new(
@@ -387,7 +425,7 @@ $tweet = App::Twimap::Tweet->new(
 
 eq_or_diff(
     $tweet->to_email->as_string,
-    qq{From: \"David E. Wheeler\" <theory\@twitter> (theory)
+    "From: \"David E. Wheeler\" <theory\@twitter> (theory)
 Subject:
  =?UTF-8?Q?=E2=80=9CCould=20You=20Afford=20t?==?UTF-8?Q?o=20be=20Poor?=?
  =?UTF-8?Q?=E2=80=9D=20http?=://ehrenreich.blogs.com/barbaras_blog/2006/07/
@@ -395,12 +433,32 @@ Subject:
 Date: Sun, 4 Sep 2011 08:28:58 +0100
 Message-Id: <110253001725321216\@twitter>
 MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary=\"1317546824.2C8b2BC51.4794\"; charset=\"utf-8\"
+
+
+--1317546824.2C8b2BC51.4794
+Date: Sun, 4 Sep 2011 08:28:58 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset=\"utf-8\"
+Content-Disposition: inline
+
+\x{201c}Could You Afford to be Poor?\x{201d}
+http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html
+
+https://twitter.com/theory/status/110253001725321216
+--1317546824.2C8b2BC51.4794
+Date: Sun, 4 Sep 2011 08:28:58 +0100
+MIME-Version: 1.0
 Content-Type: text/html; charset=\"utf-8\"
 Content-Disposition: inline
 
 \x{201c}Could You Afford to be Poor?\x{201d} <a href=\"http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html\">http://ehrenreich.blogs.com/barbaras_blog/2006/07/could_you_affor.html</a>
 <br/><br/>
-<a href=\"https://twitter.com/theory/status/110253001725321216\">https://twitter.com/theory/status/110253001725321216</a>}
+<br/><br/>
+
+<a href=\"https://twitter.com/theory/status/110253001725321216\">https://twitter.com/theory/status/110253001725321216</a>
+--1317546824.2C8b2BC51.4794--
+"
 );
 
 $tweet = App::Twimap::Tweet->new(
@@ -505,12 +563,34 @@ Subject: The difference between a good programmer
 Date: Sun, 4 Sep 2011 07:28:25 +0100
 Message-Id: <110237761818210305@twitter>
 MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="1317546824.2C8b2BC51.4794"; charset="utf-8"
+
+
+--1317546824.2C8b2BC51.4794
+Date: Sun, 4 Sep 2011 07:28:25 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+
+The difference between a good programmer
+(http://spacechem.net/solution/no-ordinary-headache/22106) and a GREAT
+programmer (http://spacechem.net/solution/no-ordinary-headache/1717)
+#SpaceChem
+
+https://twitter.com/schwern/status/110237761818210305
+--1317546824.2C8b2BC51.4794
+Date: Sun, 4 Sep 2011 07:28:25 +0100
+MIME-Version: 1.0
 Content-Type: text/html; charset="utf-8"
 Content-Disposition: inline
 
 The difference between a good programmer (<a href="http://spacechem.net/solution/no-ordinary-headache/22106">http://spacechem.net/solution/no-ordinary-headache/22106</a>) and a GREAT programmer (<a href="http://spacechem.net/solution/no-ordinary-headache/1717">http://spacechem.net/solution/no-ordinary-headache/1717</a>) #SpaceChem
 <br/><br/>
-<a href="https://twitter.com/schwern/status/110237761818210305">https://twitter.com/schwern/status/110237761818210305</a>'
+<br/><br/>
+
+<a href="https://twitter.com/schwern/status/110237761818210305">https://twitter.com/schwern/status/110237761818210305</a>
+--1317546824.2C8b2BC51.4794--
+'
 );
 
 $tweet = App::Twimap::Tweet->new(
@@ -609,7 +689,7 @@ $tweet = App::Twimap::Tweet->new(
 
 eq_or_diff(
     $tweet->to_email->as_string,
-    qq{From: "Dan Kogai" <dankogai\@twitter> (dankogai)
+    "From: \"Dan Kogai\" <dankogai\@twitter> (dankogai)
 Subject:
  =?UTF-8?Q?=E6=94=B9=E3=82=81=E3=81=A6=E5=BE=A1=E7=A4=BC=E3=81=AA=E3=81=86?=
  =?UTF-8?Q?m?=(__)m< \@lunashingo:
@@ -623,12 +703,33 @@ Subject:
 Date: Tue, 13 Sep 2011 17:27:16 +0100
 Message-Id: <113649960246980608\@twitter>
 MIME-Version: 1.0
-Content-Type: text/html; charset="utf-8"
+Content-Type: multipart/alternative; boundary=\"1317546824.2C8b2BC51.4794\"; charset=\"utf-8\"
+
+
+--1317546824.2C8b2BC51.4794
+Date: Tue, 13 Sep 2011 17:27:16 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset=\"utf-8\"
 Content-Disposition: inline
 
-\x{6539}\x{3081}\x{3066}\x{5fa1}\x{793c}\x{306a}\x{3046}m(__)m&lt; \@lunashingo: reply\x{3042}\x{308a}\x{304c}\x{3068}\x{3046}\x{3054}\x{3056}\x{3044}\x{307e}\x{3059}\x{3002}\x{65e9}\x{901f}\x{8cfc}\x{5165}\x{3057}\x{307e}\x{3057}\x{305f}\x{3002}\x{300c}\x{65b0}\x{66f8}\x{304c}\x{30d9}\x{30b9}\x{30c8}\x{300d}\x{3082}\x{597d}\x{304d}\x{3067}\x{3088}\x{304f}\x{8aad}\x{3093}\x{3067}\x{3044}\x{307e}\x{3059}&lt;\@dankogai: <a href="http://blog.livedoor.jp/dankogai/archives/51529999.html">http://blog.livedoor.jp/dankogai/archives/51529999.html</a>
+\x{6539}\x{3081}\x{3066}\x{5fa1}\x{793c}\x{306a}\x{3046}m(__)m&lt; \@lunashingo:
+reply\x{3042}\x{308a}\x{304c}\x{3068}\x{3046}\x{3054}\x{3056}\x{3044}\x{307e}\x{3059}\x{3002}\x{65e9}\x{901f}\x{8cfc}\x{5165}\x{3057}\x{307e}\x{3057}\x{305f}\x{3002}\x{300c}\x{65b0}\x{66f8}\x{304c}\x{30d9}\x{30b9}\x{30c8}\x{300d}\x{3082}\x{597d}\x{304d}\x{3067}\x{3088}\x{304f}\x{8aad}\x{3093}\x{3067}\x{3044}\x{307e}\x{3059}&lt;\@dankogai:
+http://blog.livedoor.jp/dankogai/archives/51529999.html
+
+https://twitter.com/dankogai/status/113649960246980608
+--1317546824.2C8b2BC51.4794
+Date: Tue, 13 Sep 2011 17:27:16 +0100
+MIME-Version: 1.0
+Content-Type: text/html; charset=\"utf-8\"
+Content-Disposition: inline
+
+\x{6539}\x{3081}\x{3066}\x{5fa1}\x{793c}\x{306a}\x{3046}m(__)m&lt; \@lunashingo: reply\x{3042}\x{308a}\x{304c}\x{3068}\x{3046}\x{3054}\x{3056}\x{3044}\x{307e}\x{3059}\x{3002}\x{65e9}\x{901f}\x{8cfc}\x{5165}\x{3057}\x{307e}\x{3057}\x{305f}\x{3002}\x{300c}\x{65b0}\x{66f8}\x{304c}\x{30d9}\x{30b9}\x{30c8}\x{300d}\x{3082}\x{597d}\x{304d}\x{3067}\x{3088}\x{304f}\x{8aad}\x{3093}\x{3067}\x{3044}\x{307e}\x{3059}&lt;\@dankogai: <a href=\"http://blog.livedoor.jp/dankogai/archives/51529999.html\">http://blog.livedoor.jp/dankogai/archives/51529999.html</a>
 <br/><br/>
-<a href="https://twitter.com/dankogai/status/113649960246980608">https://twitter.com/dankogai/status/113649960246980608</a>}
+<br/><br/>
+
+<a href=\"https://twitter.com/dankogai/status/113649960246980608\">https://twitter.com/dankogai/status/113649960246980608</a>
+--1317546824.2C8b2BC51.4794--
+"
 );
 
 done_testing();

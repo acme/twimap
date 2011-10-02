@@ -4,6 +4,7 @@ use DateTime;
 use DateTime::Format::Strptime;
 use Email::Date::Format qw(email_date);
 use HTML::Entities;
+use Text::Wrap qw(wrap);
 
 has 'data'        => ( is => 'ro', isa => 'HashRef', required => 1 );
 has 'expand_urls' => ( is => 'ro', isa => 'Bool',    default  => 1 );
@@ -58,7 +59,7 @@ sub to_email {
     my $subject_offset = 0;
     my $text_offset    = 0;
 
-    my $html;
+    my $oembed = '';
 
     if ( $tweet->{entities} && $tweet->{entities}->{urls} ) {
         foreach my $entity ( @{ $tweet->{entities}->{urls} } ) {
@@ -84,20 +85,20 @@ sub to_email {
             $text_offset += length($href) - length( $entity->{url} );
 
             if ( $self->oembed_urls ) {
-                $html = $self->oembed_url($expanded_url);
+                $oembed = $self->oembed_url($expanded_url) || '';
             }
         }
     }
 
     $subject =~ s{\n}{ }g;
+    local ($Text::Wrap::break)   = qr/\s/;
+    local ($Text::Wrap::columns) = 72;
+    local ($Text::Wrap::huge)    = 'overflow';
 
-    my $body;
-    if ($html) {
-        $body
-            = qq{$text\n<br/><br/>\n$html<br/><br/>\n\n<a href="$url">$url</a>};
-    } else {
-        $body = qq{$text\n<br/><br/>\n<a href="$url">$url</a>};
-    }
+    my $body_text = wrap( '', '', $subject ) . "\n\n$url";
+
+    my $body_html
+        = qq{$text\n<br/><br/>\n$oembed<br/><br/>\n\n<a href="$url">$url</a>};
 
     my $from = Email::Address->new( $name, "$screen_name\@twitter",
         "($screen_name)" );
@@ -110,14 +111,37 @@ sub to_email {
     );
     push @headers, 'In-Reply-To' => $in_reply_to if $in_reply_to;
 
+    my @parts = (
+        Email::MIME->create(
+            attributes => {
+                content_type => "text/plain",
+                disposition  => "inline",
+                charset      => "utf-8",
+
+            },
+            header_str => [ Date => $date ],
+            body       => $body_text,
+        ),
+        Email::MIME->create(
+            attributes => {
+                content_type => "text/html",
+                disposition  => "inline",
+                charset      => "utf-8",
+
+            },
+            header_str => [ Date => $date ],
+            body       => $body_html,
+        ),
+    );
+
     my $email = Email::MIME->create(
         attributes => {
-            content_type => "text/html",
-            disposition  => "inline",
+            boundary     => '1317546824.2C8b2BC51.4794',
+            content_type => "multipart/alternative",
             charset      => "utf-8",
         },
         header_str => \@headers,
-        body       => $body,
+        parts      => [@parts],
     );
 
     return $email;

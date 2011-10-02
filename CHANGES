@@ -4,6 +4,7 @@ Revision history for Perl module App::Twimap:
     - fix bug where newlines in tweets would create a malformed subject
       header in the email
     - handle replies to private/deleted tweets
+    - add a plain text version (with multipart/alternative)
 
 0.01 Wed Sep 14 11:19:03 BST 2011
     - initial release
