@@ -5,6 +5,7 @@ Revision history for Perl module App::Twimap:
       header in the email
     - handle replies to private/deleted tweets
     - add a plain text version (with multipart/alternative)
+    - move to using the _str JSON entries for IDs
 
 0.01 Wed Sep 14 11:19:03 BST 2011
     - initial release

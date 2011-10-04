@@ -19,27 +19,27 @@ my $_parser = DateTime::Format::Strptime->new(
 sub id {
     my $self  = shift;
     my $tweet = $self->data;
-    return $tweet->{id};
+    return $tweet->{id_str};
 }
 
 sub in_reply_to_status_id {
     my $self  = shift;
     my $tweet = $self->data;
-    return $tweet->{in_reply_to_status_id};
+    return $tweet->{in_reply_to_status_id_str};
 }
 
 sub to_email {
     my $self  = shift;
     my $tweet = $self->data;
 
-    my $tid = $tweet->{id};
+    my $tid = $self->id;
 
     my $epoch       = $_parser->parse_datetime( $tweet->{created_at} )->epoch;
     my $date        = email_date($epoch);
     my $name        = $tweet->{user}->{name};
     my $screen_name = $tweet->{user}->{screen_name};
 
-    my $in_reply_to_status_id = $tweet->{in_reply_to_status_id};
+    my $in_reply_to_status_id = $self->in_reply_to_status_id;
     my $in_reply_to
         = $in_reply_to_status_id
         ? "<$in_reply_to_status_id\@twitter>"
