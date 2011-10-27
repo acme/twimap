@@ -84,7 +84,7 @@ sub sync_home_timeline {
         }
         last unless $new_tweets;
         warn "sleeping...";
-        sleep 30;
+        sleep $twitter->until_rate(0.2) || 1;
     }
 }
 
@@ -127,7 +127,7 @@ sub sync_replies {
         $self->append_email($email);
         $tids->{$tid} = 1;
         warn "sleeping...";
-        sleep 30;
+        sleep $twitter->until_rate(0.2) || 1;
     }
 }
 

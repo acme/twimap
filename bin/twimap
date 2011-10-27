@@ -8,7 +8,7 @@ use Net::Twitter;
 
 my $config = Config::Tiny->read( shift || 'twimap.conf' );
 $config->{imap}->{Uid}       = 1;
-$config->{twitter}->{traits} = [qw/OAuth API::REST/];
+$config->{twitter}->{traits} = [qw/OAuth API::REST RateLimit/];
 
 my $mailbox = $config->{_}->{mailbox} || die "No mailbox";
 
