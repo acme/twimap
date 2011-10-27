@@ -50,23 +50,14 @@ sub sync_home_timeline {
     while (1) {
         warn
             "Fetching home timeline since id $since_id and max_id $max_id...";
-        my $tweets;
         my $new_tweets = 0;
-        while (1) {
-            my $conf = {
-                count            => 100,
-                include_entities => 1
-            };
-            $conf->{since_id} = $since_id if $since_id;
-            $conf->{max_id}   = $max_id   if $max_id;
-            eval {
-                $tweets = $twitter->home_timeline($conf);
-                warn Dumper( $twitter->get_error ) unless $tweets;
-            };
-            last unless $@;
-            warn $@;
-            sleep 10;
-        }
+        my $conf       = {
+            count            => 100,
+            include_entities => 1,
+        };
+        $conf->{since_id} = $since_id if $since_id;
+        $conf->{max_id}   = $max_id   if $max_id;
+        my $tweets = $twitter->home_timeline($conf);
 
         foreach my $data (@$tweets) {
             my $tweet = App::Twimap::Tweet->new( data => $data );

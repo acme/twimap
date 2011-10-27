@@ -6,6 +6,7 @@ Revision history for Perl module App::Twimap:
     - handle replies to private/deleted tweets
     - add a plain text version (with multipart/alternative)
     - move to using the _str JSON entries for IDs
+    - try and go as fast as we can, given Twitter's rate limiting
 
 0.01 Wed Sep 14 11:19:03 BST 2011
     - initial release
