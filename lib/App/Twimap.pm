@@ -118,7 +118,7 @@ sub sync_replies {
         }
         catch($err) {
             warn $err;
-            return;
+            next;
         };
         my $tweet = App::Twimap::Tweet->new( data => $data );
         push @todo, $tweet->in_reply_to_status_id
