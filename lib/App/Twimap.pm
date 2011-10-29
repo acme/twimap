@@ -13,7 +13,7 @@ has 'mail_imapclient' =>
     ( is => 'ro', isa => 'Mail::IMAPClient', required => 1 );
 has 'net_twitter' => ( is => 'ro', isa => 'Net::Twitter', required => 1 );
 has 'mailbox'     => ( is => 'ro', isa => 'Str',          required => 1 );
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub imap_tids {
     my $self    = shift;
