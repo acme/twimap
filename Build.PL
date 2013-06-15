@@ -19,6 +19,7 @@ my $build = Module::Build->new(
     },
     module_name => 'App::Twimap',
     requires    => {
+        'Algorithm::TokenBucket'     => 0,
         'Config::Tiny'               => 0,
         'DateTime'                   => 0,
         'DateTime::Format::Strptime' => 0,
@@ -31,7 +32,7 @@ my $build = Module::Build->new(
         'LWP::UserAgent'             => 0,
         'Mail::IMAPClient'           => 0,
         'Moose'                      => 0,
-        'Net::Twitter'               => 0,
+        'Net::Twitter'               => '4.00006',
         'Web::oEmbed::Common'        => 0,
         'Test::Differences::Color'   => 0,
         'Text::Wrap'                 => 0,

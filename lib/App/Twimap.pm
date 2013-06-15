@@ -1,5 +1,6 @@
 package App::Twimap;
 use Moose;
+use Algorithm::TokenBucket;
 use App::Twimap::Tweet;
 use Email::MIME;
 use Email::MIME::Creator;
@@ -7,6 +8,7 @@ use Encode;
 use List::Util qw(max);
 use LWP::UserAgent;
 use Web::oEmbed::Common;
+use Time::HiRes;
 use TryCatch;
 use URI::WithBase;
 has 'mail_imapclient' =>
@@ -45,6 +47,8 @@ sub sync_home_timeline {
     my $twitter = $self->net_twitter;
     my $tids    = $self->imap_tids;
 
+    my $bucket = new Algorithm::TokenBucket 15 / (15 * 60), 1;
+
     my $since_id = max( keys %$tids );
     my $max_id   = 0;
     while (1) {
@@ -52,7 +56,7 @@ sub sync_home_timeline {
             "Fetching home timeline since id $since_id and max_id $max_id...";
         my $new_tweets = 0;
         my $conf       = {
-            count            => 100,
+            count            => 200,
             include_entities => 1,
         };
         $conf->{since_id} = $since_id if $since_id;
@@ -75,7 +79,8 @@ sub sync_home_timeline {
         }
         last unless $new_tweets;
         warn "sleeping...";
-        sleep $twitter->until_rate(0.2) || 1;
+        Time::HiRes::sleep $bucket->until(1);
+        $bucket->count(1);
     }
 }
 
@@ -100,8 +105,13 @@ sub sync_replies {
         push @todo, $tid;
     }
 
+    my $bucket = new Algorithm::TokenBucket 180 / (15 * 60), 1;
+
     foreach my $tid (@todo) {
         next if $tids->{$tid};
+        warn "sleeping...";
+        Time::HiRes::sleep $bucket->until(1);
+        $bucket->count(1);
         warn "fetching $tid...";
         my $data;
         try {
@@ -117,8 +127,6 @@ sub sync_replies {
         my $email = $tweet->to_email;
         $self->append_email($email);
         $tids->{$tid} = 1;
-        warn "sleeping...";
-        sleep $twitter->until_rate(0.2) || 1;
     }
 }
 
